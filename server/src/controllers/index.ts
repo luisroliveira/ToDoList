@@ -1,9 +1,9 @@
 import MembroController from './MembroController';
+import TarefaController from './TarefaController';
 // import AuthController from './AuthController';
-// import TarefaController from './TarefaController';
 
 export {
   MembroController,
+  TarefaController,
   // AuthController,
-  // TarefaController,
 };

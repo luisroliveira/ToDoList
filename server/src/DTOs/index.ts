@@ -16,12 +16,15 @@ export const Membro = z.object({
   password: z.string({ required_error: 'A senha é obrigatória.' }).min(1),
 });
 
-export const Comment = z.object({
-  membroId: z.string().min(1),
+export const Tarefa = z.object({
+  nome: z
+    .string({
+      required_error: 'O nome é obrigatório.',
+    })
+    .min(1),
+  descricao: z.string().max(140),
   prioridade: z.string().min(1),
-  dataTermino: z.coerce.date(),
-  describe: z.string().min(1),
-  finalizada: z.boolean()
+  membroId: z.string().min(1),
 });
 
 // DATA TRANSFER OBJECT

@@ -9,8 +9,8 @@ generator client {
 
 model Membro {
   id        String       @id @default(cuid())
-  email     String?   @unique
-  nome      String?    
+  email     String   @unique
+  nome      String    
   password  String
   tarefas   Tarefa[]
 
@@ -20,13 +20,11 @@ model Membro {
 model Tarefa {
   id            String       @id @default(cuid())
   nome          String    
-  descricao     String?  
-  finalizada    Boolean
+  descricao     String  
+  finalizada    Boolean      @default(false)
   dataTermino   DateTime?
   prioridade    String    @default("Baixa")
-  membroId      String
-
-  membro        Membro    @relation(fields: [membroId], references: [id])
-
+  membro        Membro    @relation(fields: [membroId], references: [id], onDelete: Cascade)
+  membroId      String    
   @@map("tarefa")
 }

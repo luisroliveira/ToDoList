@@ -4,20 +4,26 @@ import { HttpException } from '../middlewares';
 
 export class MembroRepository {
   async create(data: Prisma.MembroCreateInput): Promise<Membro> {
-    const user = await prisma.membro.create({ data });
-    return user;
+    const tarefa = await prisma.membro.create({ data });
+    return tarefa;
   }
 
   async delete(id: string): Promise<Membro | null> {
-    const deletedUser = await prisma.membro.delete({
+    await prisma.tarefa.deleteMany({
+      where: {
+          membroId: id,
+      },
+    });
+
+    const deletedTarefa = await prisma.membro.delete({
       where: { id },
     });
-    return deletedUser;
+    return deletedTarefa;
   }
 
   async findByEmail(email: string): Promise<Membro | null> {
-    const user = await prisma.membro.findUnique({ where: { email } });
-    return user;
+    const tarefa = await prisma.membro.findUnique({ where: { email } });
+    return tarefa;
   }
 
   async findById(id: string): Promise<Membro | null> {
