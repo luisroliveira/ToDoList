@@ -1,0 +1,32 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Membro {
+  id        String       @id @default(cuid())
+  email     String?   @unique
+  nome      String?    
+  password  String
+  tarefas   Tarefa[]
+
+  @@map("membro")
+}
+
+model Tarefa {
+  id            String       @id @default(cuid())
+  nome          String    
+  descricao     String?  
+  finalizada    Boolean
+  dataTermino   DateTime?
+  prioridade    String    @default("Baixa")
+  membroId      String
+
+  membro        Membro    @relation(fields: [membroId], references: [id])
+
+  @@map("tarefa")
+}
