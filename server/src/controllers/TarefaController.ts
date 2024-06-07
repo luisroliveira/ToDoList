@@ -59,7 +59,53 @@ class TarefaController {
         };
     
         return next();
-      }
+    }
+
+    async update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const tarefaRepository = new TarefaRepository();
+            const tarefaData = req.body;
+            const {tarefaId} = req.params;
+
+            const validatedData = Tarefa.partial().parse(tarefaData);
+
+            console.log("+++++++++")
+            console.log(validatedData)
+
+            const existingTarefa = await tarefaRepository.findById(tarefaId);
+            if (!existingTarefa) {
+                return next({
+                    status: 404,
+                    message: 'Tarefa não encontrada',
+                });
+            }
+
+            if (validatedData.membroId) {
+                const membroRepository = new MembroRepository();
+                const checkId = await membroRepository.findById(validatedData.membroId);
+                if (!checkId) {
+                    return next({
+                        status: 409,
+                        message: 'Id do membro não está cadastrado',
+                    });
+                }
+            }
+
+            const updatedTarefa = await tarefaRepository.update(tarefaId, {
+                ...validatedData,
+            });
+
+            res.locals = {
+                status: 200,
+                message: 'Tarefa atualizada',
+                data: updatedTarefa,
+            };
+
+            return next();
+        } catch (error) {
+            return next(error);
+        }
+    }
 
     async getById(req: Request, res: Response, next: NextFunction) {
         try {

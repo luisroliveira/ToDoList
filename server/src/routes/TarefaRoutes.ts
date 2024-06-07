@@ -5,6 +5,7 @@ const tarefaRouter = Router();
 
 tarefaRouter.route('/').post(TarefaController.create);
 tarefaRouter.route('/:tarefaId').delete(TarefaController.delete);
+tarefaRouter.route('/:tarefaId').patch(TarefaController.update);
 tarefaRouter.route('/:membroId/getMembroTarefas').get(TarefaController.getMembroTarefasById);
 
 export default tarefaRouter;

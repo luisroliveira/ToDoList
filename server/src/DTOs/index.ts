@@ -25,6 +25,8 @@ export const Tarefa = z.object({
   descricao: z.string().max(140),
   prioridade: z.string().min(1),
   membroId: z.string().min(1),
+  finalizada: z.boolean().optional(),
+  dataTermino: z.coerce.date().optional()
 });
 
 // DATA TRANSFER OBJECT

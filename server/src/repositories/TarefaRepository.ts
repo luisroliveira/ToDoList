@@ -12,7 +12,28 @@ export class TarefaRepository{
           where: { id },
         });
         return deletedTarefa;
-      }
+    }
+
+    async update(id: string, data: Partial<Prisma.TarefaUpdateInput>): Promise<Tarefa | null> {
+        try {
+            const updatedTarefa = await prisma.tarefa.update({
+                where: { id },
+                data,
+            });
+            return updatedTarefa;
+        } catch (error) {
+            console.error('Erro na atualização: ', error);
+            throw error;
+        }
+    }
+
+    async updateDataTermino(id: string, dataTermino: Date | null): Promise<Tarefa | null> {
+        const updatedTarefa = await prisma.tarefa.update({
+        where: { id },
+        data: { dataTermino },
+        });
+        return updatedTarefa;
+    }
 
     async findById(id: string): Promise<Tarefa | null> {
         const tarefa = await prisma.tarefa.findUnique({
