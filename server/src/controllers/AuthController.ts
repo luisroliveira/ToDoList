@@ -7,10 +7,10 @@ import { MembroRepository } from '../repositories';
 class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password } = req.body;
+      const { username, password } = req.body;
+      const email = username
 
       const membroRepository = new MembroRepository();
-
       const membro = await membroRepository.findByEmail(email);
 
       if (!membro) {
@@ -29,6 +29,8 @@ class AuthController {
         });
       }
 
+      console.log("++=")
+
       const accessToken = jwt.sign(
         { nickName: membro.email },
         process.env.JWT_SECRET as string,
@@ -38,6 +40,8 @@ class AuthController {
       );
 
       const { password: _, ...membroWithoutPassword } = membro;
+
+      console.log("Logado")
 
       res.locals = {
         status: 200,

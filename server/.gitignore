@@ -1,0 +1,8 @@
+node_modules
+.env
+coverage/
+.eslintcache
+logs/
+dist/
+*sqlite*
+tests/mock_tests/
